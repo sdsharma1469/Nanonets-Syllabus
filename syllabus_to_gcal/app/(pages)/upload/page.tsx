@@ -40,7 +40,7 @@ export default function UploadPage() {
     })
   
     try {
-      const res = await fetch('/api/upload-pdfs', {
+      const res = await fetch('/api/upload_pdfs', {
         method: 'POST',
         body: formData,
       })
@@ -54,7 +54,7 @@ export default function UploadPage() {
       if (Array.isArray(data.texts)) {
         alert(`✅ Uploaded ${data.texts.length} files`)
       } else {
-        console.error("❌ Unexpected response:", data)
+        console.log("Unexpected response:", data)
         alert("⚠️ Upload succeeded but server response was unexpected.")
       }
     } catch (error) {
