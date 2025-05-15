@@ -1,33 +1,13 @@
-import { GoogleGenerativeAI } from "@google/generative-ai";
-import fs from "fs/promises";
-import path from "path";
+import { GoogleGenAI } from "@google/genai";
 
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY!);
-const model = genAI.getGenerativeModel({ model: "gemini-1.5-pro" });
+const ai = new GoogleGenAI({ apiKey:process.env.GEMINI_API_KEY });
 
-export async function generateScheduleFromText(pdfText: string): Promise<string> {
-  try {
-    // Load prompt template
-    const promptPath = path.join(process.cwd(), "app", "lib", "prompt.txt");
-
-    const promptTemplate = await fs.readFile(promptPath, "utf-8");
-
-    const fullPrompt = `${promptTemplate.trim()}\n\n${pdfText.trim()}`;
-
-    const result = await model.generateContent({
-      contents: [
-        {
-          role: "user",
-          parts: [{ text: fullPrompt }],
-        },
-      ],
-    });
-
-    const response = result.response;
-    return await response.text();
-
-  } catch (err) {
-    console.error("❌ Gemini API error:", err);
-    throw err;
-  }
+async function main() {
+  const response = await ai.models.generateContent({
+    model: "gemini-2.0-flash",
+    contents: "Explain how AI works in a few words",
+  });
+  console.log(response.text);
 }
+
+main();
