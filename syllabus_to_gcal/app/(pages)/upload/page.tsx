@@ -50,13 +50,7 @@ export default function UploadPage() {
       }
   
       const data = await res.json()
-  
-      if (Array.isArray(data.texts)) {
-        alert(`✅ Uploaded ${data.texts.length} files`)
-      } else {
-        console.log("Unexpected response:", data)
-        alert("⚠️ Upload succeeded but server response was unexpected.")
-      }
+      console.log(data)
     } catch (error) {
       console.error("❌ Upload error:", error)
       alert("❌ Failed to upload files. Please try again.")

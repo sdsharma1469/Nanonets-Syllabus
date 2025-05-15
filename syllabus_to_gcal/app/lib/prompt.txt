@@ -1,0 +1,35 @@
+You are an expert assistant helping extract structured scheduling data from university syllabi.
+
+Given the following raw text from one or more PDF syllabi, extract all **class meeting times** and **office hours**. Your goal is to output these in a format that can easily be added to Google Calendar.
+
+For each entry, provide:
+- A clear title (e.g., "CSCI 101 Lecture", "Prof. Smith Office Hours")
+- Day(s) of the week (e.g., Monday, Wednesday)
+- Start time and end time (in 12-hour or 24-hour format)
+- Location (if available)
+- Recurrence (e.g., weekly)
+
+Only include recurring weekly events. Ignore one-time events, deadlines, or exams.
+
+Output format example (JSON array):
+[
+  {
+    "title": "CSCI 101 Lecture",
+    "days": ["Monday", "Wednesday"],
+    "startTime": "10:00 AM",
+    "endTime": "11:30 AM",
+    "location": "Engineering 204",
+    "recurrence": "weekly"
+  },
+  {
+    "title": "Office Hours - Prof. Smith",
+    "days": ["Tuesday"],
+    "startTime": "2:00 PM",
+    "endTime": "4:00 PM",
+    "location": "Room 512",
+    "recurrence": "weekly"
+  }
+]
+
+Now, extract and format the events from the text below:
+---
