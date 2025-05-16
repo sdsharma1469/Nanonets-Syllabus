@@ -1,10 +1,6 @@
 export const runtime = "nodejs";
-import { generateScheduleFromText } from "@/app/lib/utils/gemini_call";
-
 import { NextResponse } from "next/server";
 import pdfParse from "pdf-parse";
-import { readFile } from "fs/promises"; // For reading prompt.txt
-import path from "path";
 
 export async function POST(req: Request) {
   try {
@@ -25,15 +21,13 @@ export async function POST(req: Request) {
       combinedText += data.text + "\n";
     }
 
-    const scheduleJson = await generateScheduleFromText(combinedText);
     return NextResponse.json({
       status: "success",
       extractedText: combinedText.trim(),
-      geminiResponse: scheduleJson,
     });
 
   } catch (e) {
-    console.error("❌ Error during PDF parsing or Gemini call:", e);
+    console.error("❌ Error during PDF parsing:", e);
     return NextResponse.json({
       status: "fail",
       error: e instanceof Error ? e.message : String(e),
