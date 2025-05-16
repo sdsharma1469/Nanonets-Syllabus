@@ -1,35 +1,41 @@
 You are an expert assistant helping extract structured scheduling data from university syllabi.
 
-Given the following raw text from one or more PDF syllabi, extract all **class meeting times** and **office hours**. Your goal is to output these in a format that can easily be added to Google Calendar.
+Given the following raw text from one or more PDF syllabi, extract all recurring class meeting times and office hours that occur weekly.
+Your goal is to format them so they can be directly added to Google Calendar using the Google Calendar API.
 
-For each entry, provide:
-- A clear title (e.g., "CSCI 101 Lecture", "Prof. Smith Office Hours")
-- Day(s) of the week (e.g., Monday, Wednesday)
-- Start time and end time (in 12-hour or 24-hour format)
-- Location (if available)
-- Recurrence (e.g., weekly)
+Requirements:
 
-Only include recurring weekly events. Ignore one-time events, deadlines, or exams.
+Only include recurring weekly events (ignore exams, one-time events, deadlines, holidays).
 
-Output format example (JSON array):
+For each event, output:
+
+summary: A clear title (e.g., "CSCI 101 Lecture", "Prof. Smith Office Hours")
+
+start: The next upcoming instance, in full ISO 8601 format (e.g., "2025-09-30T10:00:00-07:00")
+
+end: The corresponding end time in ISO 8601 format
+
+recurrence: Set to ["RRULE:FREQ=WEEKLY"] to indicate weekly recurrence
+
+location: If available (otherwise omit)
+
+Output format (JSON array):
 [
   {
-    "title": "CSCI 101 Lecture",
-    "days": ["Monday", "Wednesday"],
-    "startTime": "10:00 AM",
-    "endTime": "11:30 AM",
-    "location": "Engineering 204",
-    "recurrence": "weekly"
+    "summary": "CSCI 101 Lecture",
+    "start": "2025-09-30T10:00:00-07:00",
+    "end": "2025-09-30T11:30:00-07:00",
+    "recurrence": ["RRULE:FREQ=WEEKLY"],
+    "location": "Engineering 204"
   },
   {
-    "title": "Office Hours - Prof. Smith",
-    "days": ["Tuesday"],
-    "startTime": "2:00 PM",
-    "endTime": "4:00 PM",
-    "location": "Room 512",
-    "recurrence": "weekly"
+    "summary": "Office Hours - Prof. Smith",
+    "start": "2025-10-01T14:00:00-07:00",
+    "end": "2025-10-01T16:00:00-07:00",
+    "recurrence": ["RRULE:FREQ=WEEKLY"],
+    "location": "Room 512"
   }
 ]
+If any information (like location) is missing, omit that field.
 
 Now, extract and format the events from the text below:
----

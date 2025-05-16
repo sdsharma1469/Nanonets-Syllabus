@@ -17,7 +17,7 @@ export async function POST(req: Request) {
       const arrayBuffer = await file.arrayBuffer();
       const buffer = Buffer.from(arrayBuffer);
       const data = await pdfParse(buffer);
-      console.log(`📄 Text extracted from ${file.name}:\n---\n${data.text}\n---\n`);
+      //console.log(`📄 Text extracted from ${file.name}:\n---\n${data.text}\n---\n`);
       combinedText += data.text + "\n";
     }
 
