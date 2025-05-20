@@ -102,6 +102,33 @@ const ai = new GoogleGenAI({
 });
 ```
 
+## API Selection
+
+By default, the SDK uses the beta API endpoints provided by Google to support
+preview features in the APIs. The stable API endpoints can be selected by
+setting the API version to `v1`.
+
+To set the API version use `apiVersion`. For example, to set the API version to
+`v1` for Vertex AI:
+
+```typescript
+const ai = new GoogleGenAI({
+    vertexai: true,
+    project: 'your_project',
+    location: 'your_location',
+    apiVersion: 'v1'
+});
+```
+
+To set the API version to `v1alpha` for the Gemini Developer API:
+
+```typescript
+const ai = new GoogleGenAI({
+    apiKey: 'GEMINI_API_KEY',
+    apiVersion: 'v1alpha'
+});
+```
+
 ## GoogleGenAI overview
 
 All API features are accessed through an instance of the `GoogleGenAI` classes.
@@ -127,7 +154,6 @@ The submodules bundle together related API methods:
 
 More samples can be found in the
 [github samples directory](https://github.com/googleapis/js-genai/tree/main/sdk-samples).
-
 
 ### Streaming
 
