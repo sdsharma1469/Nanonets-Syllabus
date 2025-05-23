@@ -37,5 +37,5 @@ Output format (JSON array):
   }
 ]
 If any information (like location) is missing, omit that field.
-
+Make sure youre only adding one event for each class/office hour (This means dont create separate events for a class that happens twice a week - use the RRULE)
 Now, extract and format the events from the text below:
