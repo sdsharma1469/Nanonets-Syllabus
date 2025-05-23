@@ -1,6 +1,20 @@
 export const runtime = "nodejs";
 import { NextResponse } from "next/server";
 import pdfParse from "pdf-parse";
+//import { cors } from "@/app/lib/cors";
+
+export async function OPTIONS(request: Request) {
+  const origin = request.headers.get('origin')
+
+  return new NextResponse(null, {
+      status: 204,
+      headers: {
+          'Access-Control-Allow-Origin': origin || '*',
+          'Access-Control-Allow-Methods': 'GET,OPTIONS,PATCH,DELETE,POST,PUT',
+          'Access-Control-Allow-Headers': 'Content-Type, Authorization'
+      }
+  })
+}
 
 export async function POST(req: Request) {
   try {
@@ -8,7 +22,12 @@ export async function POST(req: Request) {
     const files = formData.getAll("pdfs") as File[];
 
     if (!files || files.length === 0) {
-      return NextResponse.json({ status: "fail", error: "No files uploaded." });
+      return new NextResponse(JSON.stringify({ status: "fail", error: "No files uploaded." }), {
+        status: 400,
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+        },
+      });
     }
 
     let combinedText = "";
@@ -17,20 +36,29 @@ export async function POST(req: Request) {
       const arrayBuffer = await file.arrayBuffer();
       const buffer = Buffer.from(arrayBuffer);
       const data = await pdfParse(buffer);
-      //console.log(`📄 Text extracted from ${file.name}:\n---\n${data.text}\n---\n`);
       combinedText += data.text + "\n";
     }
 
-    return NextResponse.json({
+    return new NextResponse(JSON.stringify({
       status: "success",
       extractedText: combinedText.trim(),
+    }), {
+      status: 200,
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+      },
     });
 
   } catch (e) {
     console.error("❌ Error during PDF parsing:", e);
-    return NextResponse.json({
+    return new NextResponse(JSON.stringify({
       status: "fail",
       error: e instanceof Error ? e.message : String(e),
+    }), {
+      status: 500,
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+      },
     });
   }
 }
