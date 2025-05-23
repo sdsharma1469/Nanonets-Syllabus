@@ -3,6 +3,10 @@ import { NextResponse } from "next/server";
 import pdfParse from "pdf-parse";
 //import { cors } from "@/app/lib/cors";
 
+export async function GET() {
+  return new Response('Method Not Allowed', { status: 405 })
+}
+
 export async function OPTIONS(request: Request) {
   const origin = request.headers.get('origin')
 
