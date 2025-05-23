@@ -9,7 +9,6 @@ const maxFiles = 10
 
 export default function UploadPage() {
   const [fileInputs, setFileInputs] = useState<(File | null)[]>([])
-  const [geminiResponse, setGeminiResponse] = useState<string | null>(null)
   const [parsedEvents, setParsedEvents] = useState<GoogleCalendarEvent[]>([])
   const [success, setSuccess] = useState(false)
   const [loading, setLoading] = useState(false)
@@ -39,7 +38,6 @@ export default function UploadPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    setGeminiResponse(null)
     setParsedEvents([])
     setSuccess(false)
     setLoading(true)
@@ -71,7 +69,6 @@ export default function UploadPage() {
 
       const geminiData = await geminiRes.json()
       const rawResponse = geminiData.response || geminiData.error || 'No response'
-      setGeminiResponse(rawResponse)
 
       let cleanJson = rawResponse.trim()
       if (cleanJson.startsWith('```')) {
