@@ -1,6 +1,6 @@
 export const runtime = "nodejs";
 import { NextResponse } from "next/server";
-import pdfParse from "pdf-parse";
+const pdfParse = require("pdf-parse");
 //import { cors } from "@/app/lib/cors";
 
 export async function GET() {
